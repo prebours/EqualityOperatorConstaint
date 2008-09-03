@@ -40,7 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryOperatorConstraintWhenActualIsAlwaysNull.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Operators\BaseStaticEqualityOperatorProvider.cs" />
     <Compile Include="Operators\BinaryOperator.cs" />
     <Compile Include="Operators\DelegatedStaticEqualityOperatorProvider.cs" />

@@ -10,7 +10,6 @@ namespace NUnit.Framework.Constraints.Tests
     [TestFixture]
     public class StandardEqualityTest
     {
-
         class Customer
         {
             private readonly string name;
@@ -66,6 +65,11 @@ namespace NUnit.Framework.Constraints.Tests
             public static bool operator !=(Customer lhs, Customer rhs)
             {
                 return !(lhs == rhs);
+            }
+
+            public override string ToString()
+            {
+                return Name;
             }
         }
 
@@ -155,12 +159,10 @@ namespace NUnit.Framework.Constraints.Tests
         public void TestCustomerWithEquality()
         {
             Customer customer = new Customer("James Bond");
-
             Constraint constraint = new EqualityOperatorConstraint(customer, new ReflectiveStaticEqualityOperatorProvider<Customer>());
+            
             Assert.IsTrue(constraint.Matches(new Customer("James Bond")));
             Assert.IsTrue(constraint.Matches(customer));
-
-           
         }
 
         [Test]
@@ -178,6 +180,8 @@ namespace NUnit.Framework.Constraints.Tests
             Customer customer = new CustomerWithBadEqualImplementation("James Bond");
             Constraint constraint = new EqualityOperatorConstraint(customer, new ReflectiveStaticEqualityOperatorProvider<Customer>());
             Assert.IsFalse(constraint.Matches(new CustomerWithBadEqualImplementation("James Bond")));
+
+            Assert.That(new CustomerWithBadEqualImplementation("James Bond"), constraint);
         }
 
         [Test]

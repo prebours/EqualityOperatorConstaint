@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NUnit.Framework.Constraints.Operators
 {
-    public abstract class BaseStaticEqualityOperatorProvider<T> : IStaticEqualityOperatorProvider where T : class
+    public abstract class BaseStaticEqualityOperatorProvider<T> : IStaticEqualityOperatorProvider 
     {
         private void CheckParameter(object parameter)
         {
@@ -23,13 +23,13 @@ namespace NUnit.Framework.Constraints.Operators
         bool IStaticEqualityOperatorProvider.EvaluateStaticEqualEqualOperator(object lhs, object rhs)
         {
             CheckParameters(lhs, rhs);
-            return EvaluateStaticEqualEqualOperator(lhs as T, rhs as T);
+            return EvaluateStaticEqualEqualOperator((T)lhs, (T)rhs);
         }
 
         bool IStaticEqualityOperatorProvider.EvaluateStaticNotEqualOperator(object lhs, object rhs)
         {
             CheckParameters(lhs, rhs);
-            return EvaluateStaticNotEqualOperator(lhs as T, rhs as T);
+            return EvaluateStaticNotEqualOperator((T)lhs, (T)rhs);
         }
 
         public abstract bool EvaluateStaticEqualEqualOperator(T lhs, T rhs);

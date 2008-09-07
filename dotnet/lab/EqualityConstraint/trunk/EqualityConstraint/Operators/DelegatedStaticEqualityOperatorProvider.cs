@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NUnit.Framework.Constraints.Operators
 {
-    public class DelegatedStaticEqualityOperatorProvider<T> : BaseStaticEqualityOperatorProvider<T> where T : class        
+    public class DelegatedStaticEqualityOperatorProvider<T> : BaseStaticEqualityOperatorProvider<T>     
     {
         private readonly StaticEqualityOperatorHandler staticEqualEqualOperator;
         private readonly StaticEqualityOperatorHandler staticNotEqualOperator;

@@ -92,9 +92,6 @@ namespace NUnit.TestData.EqualityConstraint.Test
                     new ReflectiveStaticEqualityOperatorProvider<Customer>());
 
             Assert.IsFalse(constraint.Matches(new Customer("Henry")));
-          
-            Assert.That(new Customer("Henry"), new InequalityOperatorConstraint(new Customer("James"),
-                    new ReflectiveStaticEqualityOperatorProvider<Customer>()));
         }
 
         [Test]
@@ -104,11 +101,7 @@ namespace NUnit.TestData.EqualityConstraint.Test
             Constraint constraint = new EqualityOperatorConstraint(customer,
                     new ReflectiveStaticEqualityOperatorProvider<Customer>());
 
-            Assert.IsFalse(constraint.Matches(new Customer("Henry")));
-
-            Assert.That(new Customer("Henry"), new EqualityOperatorConstraint(new Customer("James"),
-                   new ReflectiveStaticEqualityOperatorProvider<Customer>()));
-           
+            Assert.IsFalse(constraint.Matches(new Customer("Henry")));           
         }
     }
 }

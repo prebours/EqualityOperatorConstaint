@@ -49,7 +49,7 @@
     <Compile Include="StandardEqualityTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EqualityConstraint\EqualityOperatorConstraint.csproj">
+    <ProjectReference Include="..\EqualityOperatorConstraint\EqualityOperatorConstraint.csproj">
       <Project>{D6C4F66F-F027-4EC3-A51F-B2189F4E7CB5}</Project>
       <Name>EqualityOperatorConstraint</Name>
     </ProjectReference>

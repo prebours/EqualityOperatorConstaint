@@ -180,8 +180,6 @@ namespace NUnit.Framework.Constraints.Tests
             Customer customer = new CustomerWithBadEqualImplementation("James Bond");
             Constraint constraint = new EqualityOperatorConstraint(customer, new ReflectiveStaticEqualityOperatorProvider<Customer>());
             Assert.IsFalse(constraint.Matches(new CustomerWithBadEqualImplementation("James Bond")));
-
-            Assert.That(new CustomerWithBadEqualImplementation("James Bond"), constraint);
         }
 
         [Test]

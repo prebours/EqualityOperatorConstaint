@@ -6,42 +6,11 @@ using System.Globalization;
 
 namespace StringFormatting
 {
-    public class ScalingFactor
+    public enum ScalingFactor
     {
-        private readonly int _scalingFactor;
-        private readonly string _symbol;
-
-        public ScalingFactor(int scalingFactor, string symbol)
-        {
-            if (scalingFactor < 0)
-            {
-
-                throw new ArgumentOutOfRangeException("numberScaling");
-            }
-            _scalingFactor = scalingFactor;
-            _symbol = symbol;
-        }
-
-        public int Scaling
-        {
-            get
-            {
-                return _scalingFactor;
-            }
-        }
-
-        public string Symbol
-        {
-            get
-            {
-                return _symbol;
-            }
-        }
-
-        public static ScalingFactor None = new ScalingFactor(0, "");
-        public static ScalingFactor Million = new ScalingFactor(2, "M");
-        public static ScalingFactor Billion = new ScalingFactor(3, "Bn");
-        
+        None,
+        Million,
+        Billion
     }
 
     public class NumberScalingFormatter : IFormatProvider, ICustomFormatter
@@ -51,14 +20,31 @@ namespace StringFormatting
 
 
         public NumberScalingFormatter(ScalingFactor scalingFactor, CultureInfo underlyingCulture)
-        {
-            if (scalingFactor == null || underlyingCulture == null)
+        {   
+            if (underlyingCulture == null)
             {
-                throw new ArgumentNullException("underlyingCulture");
+                throw new ArgumentNullException();
             }
             _scalingFactor = scalingFactor;
             _underlyingCulture = underlyingCulture;
         }
+
+        public ScalingFactor Factor
+        {
+            get
+            {
+                return _scalingFactor;
+            }
+        }
+
+        public CultureInfo Culture
+        {
+            get
+            {
+                return _underlyingCulture;
+            }
+        }
+
 
         #region IFormatProvider Members
 
@@ -79,6 +65,27 @@ namespace StringFormatting
         #endregion
 
         #region ICustomFormatter Members
+        private int GetUnderlyingThousandScalingFactor()
+        {
+            int underlyingThousandScalingFactor;
+
+            switch (_scalingFactor)
+            {
+                case ScalingFactor.None:
+                    underlyingThousandScalingFactor = 0;
+                    break;
+
+                case ScalingFactor.Billion:
+                    underlyingThousandScalingFactor = 3;
+                    break;
+
+                default:
+                case ScalingFactor.Million:
+                    underlyingThousandScalingFactor = 2;
+                    break;
+            }
+            return underlyingThousandScalingFactor;
+        }
 
         private object Scale(object arg)
         {
@@ -88,16 +95,17 @@ namespace StringFormatting
             {
                 scaledValue = null;
             }
-            else if (_scalingFactor.Scaling == 0)
+            else if (_scalingFactor == ScalingFactor.None)
             {
                 scaledValue = arg;
             }
             else
             {
+                int underlyingThousandScalingFactor = GetUnderlyingThousandScalingFactor();
                 try
                 {
                     double convertedValue = Convert.ToDouble(arg);
-                    scaledValue = Math.Pow(10, _scalingFactor.Scaling * -3) * convertedValue;
+                    scaledValue = Math.Pow(10, underlyingThousandScalingFactor * -3) * convertedValue;
                 }
                 catch (InvalidCastException)
                 {
@@ -116,7 +124,6 @@ namespace StringFormatting
                 formattableString.Append(format);
             }
             formattableString.Append("}");
-            formattableString.Append(_scalingFactor.Symbol);
 
             return string.Format(_underlyingCulture, formattableString.ToString(), Scale(arg));
         }

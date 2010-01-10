@@ -1,7 +1,0 @@
-C:\Documents and Settings\pierre rebours\My Documents\Visual Studio 2008\Projects\StringFormatting\bin\Debug\StringFormatting.exe
-C:\Documents and Settings\pierre rebours\My Documents\Visual Studio 2008\Projects\StringFormatting\bin\Debug\StringFormatting.pdb
-C:\Documents and Settings\pierre rebours\My Documents\Visual Studio 2008\Projects\StringFormatting\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\pierre rebours\My Documents\Visual Studio 2008\Projects\StringFormatting\obj\Debug\StringFormatting.exe
-C:\Documents and Settings\pierre rebours\My Documents\Visual Studio 2008\Projects\StringFormatting\obj\Debug\StringFormatting.pdb
-C:\Documents and Settings\pierre rebours\My Documents\Perso\Blog\StringFormatting\obj\Debug\StringFormatting.exe
-C:\Documents and Settings\pierre rebours\My Documents\Perso\Blog\StringFormatting\obj\Debug\StringFormatting.pdb

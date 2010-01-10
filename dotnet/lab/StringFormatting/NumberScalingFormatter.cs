@@ -6,23 +6,57 @@ using System.Globalization;
 
 namespace StringFormatting
 {
+    public class ScalingFactor
+    {
+        private readonly int _scalingFactor;
+        private readonly string _symbol;
+
+        public ScalingFactor(int scalingFactor, string symbol)
+        {
+            if (scalingFactor < 0)
+            {
+
+                throw new ArgumentOutOfRangeException("numberScaling");
+            }
+            _scalingFactor = scalingFactor;
+            _symbol = symbol;
+        }
+
+        public int Scaling
+        {
+            get
+            {
+                return _scalingFactor;
+            }
+        }
+
+        public string Symbol
+        {
+            get
+            {
+                return _symbol;
+            }
+        }
+
+        public static ScalingFactor None = new ScalingFactor(0, "");
+        public static ScalingFactor Million = new ScalingFactor(2, "M");
+        public static ScalingFactor Billion = new ScalingFactor(3, "Bn");
+        
+    }
+
     public class NumberScalingFormatter : IFormatProvider, ICustomFormatter
     {
         private readonly CultureInfo _underlyingCulture;
-        private readonly int _numberScaling;
+        private readonly ScalingFactor _scalingFactor;
 
-      
-        public NumberScalingFormatter(int numberScaling, CultureInfo underlyingCulture)
+
+        public NumberScalingFormatter(ScalingFactor scalingFactor, CultureInfo underlyingCulture)
         {
-            if (numberScaling <= 0)
-            {
-                throw new ArgumentOutOfRangeException("numberScaling");
-            }
-            if (underlyingCulture == null)
+            if (scalingFactor == null || underlyingCulture == null)
             {
                 throw new ArgumentNullException("underlyingCulture");
             }
-            _numberScaling = numberScaling;
+            _scalingFactor = scalingFactor;
             _underlyingCulture = underlyingCulture;
         }
 
@@ -54,7 +88,7 @@ namespace StringFormatting
             {
                 scaledValue = null;
             }
-            else if (_numberScaling == 0)
+            else if (_scalingFactor.Scaling == 0)
             {
                 scaledValue = arg;
             }
@@ -63,7 +97,7 @@ namespace StringFormatting
                 try
                 {
                     double convertedValue = Convert.ToDouble(arg);
-                    scaledValue = Math.Pow(10, _numberScaling * -3) * convertedValue;
+                    scaledValue = Math.Pow(10, _scalingFactor.Scaling * -3) * convertedValue;
                 }
                 catch (InvalidCastException)
                 {
@@ -82,6 +116,7 @@ namespace StringFormatting
                 formattableString.Append(format);
             }
             formattableString.Append("}");
+            formattableString.Append(_scalingFactor.Symbol);
 
             return string.Format(_underlyingCulture, formattableString.ToString(), Scale(arg));
         }

@@ -18,15 +18,19 @@ namespace StringFormatting
             // 1billion and 345 millions
             decimal valueToFormat = 1345278000.346M;
 
+            
+            DisplayFormatting("{0:N}", valueToFormat, invariantCulture);
+            
+            DisplayFormatting("{0:#,#,,}", valueToFormat, invariantCulture);
             DisplayFormatting("{0:#,#,,.00}", valueToFormat, invariantCulture);
             DisplayFormatting("{0:#,#,,.00}", valueToFormat, usCulture);
             DisplayFormatting("{0:#,#,,.00}", valueToFormat, frenchCulture);
 
 
             DisplayFormatting("{0:C}", valueToFormat, invariantCulture);
-            DisplayFormatting("{0:C}", valueToFormat, new NumberScalingFormatter(2, invariantCulture));
-            DisplayFormatting("{0:C}", valueToFormat, new NumberScalingFormatter(2, usCulture));
-            DisplayFormatting("{0:C}", valueToFormat, new NumberScalingFormatter(2, frenchCulture));
+            DisplayFormatting("{0:C}", valueToFormat, new NumberScalingFormatter(ScalingFactor.Million, invariantCulture));
+            DisplayFormatting("{0:C}", valueToFormat, new NumberScalingFormatter(ScalingFactor.Million, usCulture));
+            DisplayFormatting("{0:C}", valueToFormat, new NumberScalingFormatter(ScalingFactor.Million, frenchCulture));
         }
 
       

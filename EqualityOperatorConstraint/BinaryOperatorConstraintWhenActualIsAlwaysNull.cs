@@ -14,6 +14,8 @@ namespace NUnit.Framework.Constraints
             this.innerConstraint = innerConstraint;
         }
 
+       
+
         public override bool Matches(object actual)
         {
             return innerConstraint.Matches(null);
